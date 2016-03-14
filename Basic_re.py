@@ -31,11 +31,24 @@ for line in input_file.readlines():
     output_file.write(line)'''
 
 # 各学科小类别存储
-index = (1, 13)
+index = range(1, 14)
+counter2 = 0    # 用于存储小类编号
+class_re = re.compile(u"\d\d\d\d *.*类")
+if class_re.match(u"0101 哲学类"):
+    print "ok"
+# 初始化状态
+output_file = codecs.open("data/genre/class/1_0.txt", 'wb', encoding='utf8')
+
+# 遍历每个大类
 for counter in index:
+    counter2 = 0
     if counter == 11:
         continue
-    counter
-
-output_file.close()
-input_file.close()
+    input_file = codecs.open("data/genre/"+str(counter)+".txt", 'rb', encoding='utf8')
+    for line in input_file.readlines():
+        if class_re.match(line):
+            output_file.close()
+            counter2 += 1
+            output_file = codecs.open("data/genre/class/"+str(counter)+'_'+str(counter2)+'.txt', 'wb', encoding='utf8')
+        output_file.write(line)
+    input_file.close()
