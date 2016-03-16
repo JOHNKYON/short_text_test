@@ -52,6 +52,6 @@ for counter in index:
             counter2 += 1
             output_file = codecs.open("data/genre/class/"+str(counter)+'_'+str(counter2)+'.txt', 'wb', encoding='utf8')
         if major_re.match(line):
-            output_file.write('\n\n')
+            output_file.write('\n')
         output_file.write(line)
     input_file.close()
