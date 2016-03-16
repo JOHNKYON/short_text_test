@@ -57,7 +57,7 @@ for counter in index:
             output_file.close()
             counter2 += 1
             output_file = codecs.open("data/genre/class/"+str(counter)+'_'+str(counter2)+'.txt', 'wb', encoding='utf8')
-            # 此处不继续执行是为了不记录小类名称信息，方便下一步分词处理
+            # 此处不执行是为了不记录小类名称信息，方便下一步分词处理
             continue
         # 每两个专业之间空两行
         if major_re.match(line):
