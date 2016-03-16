@@ -43,14 +43,23 @@ output_file = codecs.open("data/genre/class/1_0.txt", 'wb', encoding='utf8')
 # 遍历每个大类
 for counter in index:
     counter2 = 0
+    # counter3用于去除小类文件头的大类信息
+    # 重置counter3
+    counter3 = 0
     if counter == 11:
         continue
     input_file = codecs.open("data/genre/"+str(counter)+".txt", 'rb', encoding='utf8')
     for line in input_file.readlines():
+        if counter3 == 0:
+            counter3 += 1
+            continue
         if class_re.match(line):
             output_file.close()
             counter2 += 1
             output_file = codecs.open("data/genre/class/"+str(counter)+'_'+str(counter2)+'.txt', 'wb', encoding='utf8')
+            # 此处不继续执行是为了不记录小类名称信息，方便下一步分词处理
+            continue
+        # 每两个专业之间空两行
         if major_re.match(line):
             output_file.write('\n\n')
         output_file.write(line)
