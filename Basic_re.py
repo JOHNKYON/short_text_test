@@ -33,9 +33,10 @@ for line in input_file.readlines():
 # 各学科小类别存储
 index = range(1, 14)
 counter2 = 0    # 用于存储小类编号
+# 小类别的正则表达式
 class_re = re.compile(u"\d\d\d\d *.*类")
-if class_re.match(u"0101 哲学类"):
-    print "ok"
+# 各专业的正则表达式
+major_re = re.compile(u"\d\d\d\d\d\d")
 # 初始化状态
 output_file = codecs.open("data/genre/class/1_0.txt", 'wb', encoding='utf8')
 
@@ -50,5 +51,7 @@ for counter in index:
             output_file.close()
             counter2 += 1
             output_file = codecs.open("data/genre/class/"+str(counter)+'_'+str(counter2)+'.txt', 'wb', encoding='utf8')
+        if major_re.match(line):
+            output_file.write('\n\n')
         output_file.write(line)
     input_file.close()
