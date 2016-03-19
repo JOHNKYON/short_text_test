@@ -64,3 +64,22 @@ for counter in index:
             output_file.write('\n\n')
         output_file.write(line)
     input_file.close()
+
+
+'''output_file = codecs.open("data/data_for_lsi.txt", 'wb', encoding='utf8')
+# 为了方便处理而仅去除了大类信息的
+for counter in index:
+    # counter3用于去除小类文件头的大类信息
+    # 重置counter3
+    counter3 = 0
+    if counter == 11:
+        continue
+    input_file = codecs.open("data/genre/"+str(counter)+".txt", 'rb', encoding='utf8')
+    for line in input_file.readlines():
+        if counter3 == 0:
+            counter3 += 1
+            continue
+        if class_re.match(line):
+            continue
+        output_file.write(line)
+    input_file.close()'''

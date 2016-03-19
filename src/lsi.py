@@ -51,7 +51,7 @@ def build_lsi(corpus, dictionary):
     """
     # 建立模型
     # 这个num_topics是拍脑门决定的，具体效果留待调参
-    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=2)
+    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=20)
     return lsi
 
 
@@ -89,11 +89,11 @@ def sim_matrix(index):
     """
     此函数用于将此模型中的所有文档转化为矩阵，为某一文档相对于其他文档的相关度。由于实际需求和内存限制，每一文档实际只存最相近的10个文档
     :param index: 已训练完成的lsi的索引
-    :param corpus: 此处为全部专业及其描述的语料库
     :return:    返回一个矩阵，为文档间的相关度
     """
     # output_file = codecs.open("data/lsi_matrix.txt", "wb", encoding='utf8')
     # 应当对此矩阵加入文档索引
-    index = map(lambda x: map(lambda m, count: (count, m), x, range(0, len(x))), index)
-    for ele in index:
-        print ele
+    index = map(lambda x: map(lambda m, count: [count, m], x, range(0, len(x))), index)
+    # 排序
+    index = map(lambda x: sorted(x, key=lambda similarity: similarity[1], reverse=True)[0: 10], index)
+    return index

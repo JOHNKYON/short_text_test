@@ -5,7 +5,7 @@ import codecs
 import conf
 
 # 读入文件
-input_file = codecs.open("data/genre/class/1_1.txt", 'rb', encoding='utf8')
+input_file = codecs.open("data/source_without_header.txt", 'rb', encoding='utf8')
 raw = input_file.read()
 
 # 分词
@@ -27,7 +27,15 @@ lsi = src.lsi.build_lsi(corpus_tfidf, dictionary)
 index = src.lsi.lsi_index(lsi, corpus)
 
 # 用索引和语料库生成关联度矩阵
-src.lsi.sim_matrix(index)
+sim_matrix = src.lsi.sim_matrix(index)
 
+# 储存关联度矩阵
+output_file = codecs.open("data/sim_matrix.txt", 'wb', encoding='utf8')
 
+for ele in sim_matrix:
+    for m in ele:
+        output_file.write('('+str(m[0])+',\t'+str(m[1])+')\t')
+    output_file.write('\n')
+
+output_file.close()
 input_file.close()
