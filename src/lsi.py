@@ -93,7 +93,7 @@ def sim_matrix(index):
     :return:    返回一个矩阵，为文档间的相关度
     """
     # output_file = codecs.open("data/lsi_matrix.txt", "wb", encoding='utf8')
-    # 应当对此矩阵加入文档索引，暂未完成
-    index = map(lambda x: map(lambda m: (x.index(m), m), x), index)
+    # 应当对此矩阵加入文档索引
+    index = map(lambda x: map(lambda m, count: (count, m), x, range(0, len(x))), index)
     for ele in index:
         print ele
