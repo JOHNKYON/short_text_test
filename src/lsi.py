@@ -15,12 +15,23 @@ def raw_init(raw):
     """
 
     # 去除空格符
-    raw_without_space = re.sub('\s*', '', raw)
+    raw_without_space = re.sub(' *', '', raw)
     # 将不同的专业分开作list元素
     # 专业号的正则表达式
-    major_re = re.compile(u"\d\d\d\d\d\d")
+    major_re = re.compile(u"\d{6}\D")
+
+    '''# 用于测试匹配数量不一致问题
+    out_test = codecs.open("data/re_test.txt", 'wb', encoding='utf8')
+    re_find = major_re.findall(raw_without_space)
+    counter = 0
+    for ele in re_find:
+        out_test.write(str(counter) + '\t' + ele + '\n')
+        counter += 1
+    out_test.close()'''
+
     # 对整个字符串进行切片,分割符为此正则表达
-    raw_splited = major_re.split(raw_without_space)
+    raw_splited = major_re.split(raw_without_space)[1:]
+
 
     # 分词
     # 载入自定义词典
@@ -51,7 +62,7 @@ def build_lsi(corpus, dictionary):
     """
     # 建立模型
     # 这个num_topics是拍脑门决定的，具体效果留待调参
-    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=20)
+    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=15)
     return lsi
 
 

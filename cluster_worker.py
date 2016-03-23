@@ -29,6 +29,9 @@ index = src.lsi.lsi_index(lsi, corpus)
 # 用索引和语料库生成关联度矩阵
 sim_matrix = src.lsi.sim_matrix(index)
 
+# 聚类结果查询
+src.querry.form_bucket(sim_matrix)
+
 # 储存关联度矩阵
 output_file = codecs.open("data/sim_matrix.txt", 'wb', encoding='utf8')
 
