@@ -11,7 +11,7 @@ def form_bucket(mtx):
     :return:
     """
     output_file = codecs.open("data/bucket.txt", 'wb', encoding='utf8')
-    input_file = codecs.open("data/major_list.txt", 'rb', encoding='utf8')
+    input_file = codecs.open("data/major_dict.json", 'rb', encoding='utf8')
     raw = input_file.read()
     major_list = json.loads(raw)
 

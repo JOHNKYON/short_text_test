@@ -4,7 +4,6 @@ import jieba
 from data import stopwords
 import re
 import gensim
-import codecs
 
 
 def raw_init(raw):
@@ -62,7 +61,7 @@ def build_lsi(corpus, dictionary):
     """
     # 建立模型
     # 这个num_topics是拍脑门决定的，具体效果留待调参
-    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=15)
+    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=20)
     return lsi
 
 
@@ -108,3 +107,22 @@ def sim_matrix(index):
     # 排序
     index = map(lambda x: sorted(x, key=lambda similarity: similarity[1], reverse=True)[0: 10], index)
     return index
+
+
+def topic_cluster(lsi, corpus):
+    """
+    此函数用于将多篇文档适用于训练完成的lsi模型，判断其所属的bucket(此处为topic)，并输出到文件
+    :param lsi: 已建立完成的lsi模型
+    :param corpus: 用于匹配topic的向量化的语料库
+    :return: 返回list，结构为(doc_no:topic_no, ...)
+    """
+    corpus_lsi = lsi[corpus]
+    result = list()
+    counter = 0
+    for doc in corpus_lsi:
+        # 此处进行了排序，直接得到了此文档最接近的topic编号和相近度
+        doc_topic_most_match = sorted(doc, key=lambda a: a[1], reverse=True)[0]
+        row = (counter, doc_topic_most_match[0], doc_topic_most_match[1])
+        result.append(row)
+        counter += 1
+    return result

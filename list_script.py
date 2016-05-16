@@ -5,7 +5,7 @@ import re
 import json
 
 input_file = codecs.open("data/source_without_header.txt", 'rb', encoding='utf8')
-output_file = codecs.open("data/major_list.txt", 'wb', encoding='utf8')
+output_file = codecs.open("data/major_dict.txt", 'wb', encoding='utf8')
 
 major_re = re.compile(u"\d{6}")
 counter = 0

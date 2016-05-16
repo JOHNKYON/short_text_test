@@ -7,6 +7,7 @@ import conf
 # 读入文件
 input_file = codecs.open("data/source_without_header.txt", 'rb', encoding='utf8')
 raw = input_file.read()
+pg_conf = conf.pg_conf.pg_conf
 
 # 分词
 # conf.jieba_conf.init()
@@ -22,6 +23,11 @@ corpus_tfidf = src.lsi.build_tfidf(corpus)
 
 # 训练lsi模型
 lsi = src.lsi.build_lsi(corpus_tfidf, dictionary)
+
+# 获取每个major的bucket_id及匹配度
+bucket = src.lsi.topic_cluster(lsi, corpus_tfidf)
+
+src.pg_insert.pg_insert(bucket, pg_conf)
 
 # 获取索引
 index = src.lsi.lsi_index(lsi, corpus)
